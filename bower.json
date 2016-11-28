@@ -1,0 +1,23 @@
+{
+  "name": "ddsite",
+  "authors": [
+    "j3b1d1ho0 <j3b1d1ho0@gmail.com>"
+  ],
+  "description": "D&D site",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.1",
+    "angular-ui-router": "^0.3.2",
+    "angular-resource": "^1.5.9",
+    "angular-touch": "^1.5.9"
+  }
+}
