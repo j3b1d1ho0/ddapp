@@ -7,15 +7,30 @@ import * as bodyParser from 'body-parser';
 import * as ejs from 'ejs';
 import * as mongoose from 'mongoose';
 
+//WTF?! v
+import * as passport from 'passport';
+require("./config/passport")
+import Map from './models/ddapp'
+import maps from './api/maps';
+// import users from './api/users';
+
+
+
 const MONGO_URI = "mongodb://webuser:secret@ds111748.mlab.com:11748/ddapp";
 mongoose.connect(MONGO_URI).then(() => {
   console.log('mongoose connected');
 }).catch((err) => {
   console.log(err);
+
 });
 
 import routes from './routes/index';
-import users from './routes/users';
+
+
+
+
+
+
 
 let app = express();
 
@@ -29,13 +44,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/api/maps', maps);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 app.use('/api', express.static(path.join(__dirname, 'api')));
 console.log(__dirname);
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', require('./api/users'));
 
 
 // redirect 404 to home for the sake of AngularJS client-side routes

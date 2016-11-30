@@ -1,13 +1,32 @@
 
 import * as mongoose from 'mongoose';
 
+export interface ISubMap {
+    name:string,
+    description:string
+}
+
+
 export interface IMap extends mongoose.Document {
     name:string,
     category:string,
     description:string,
     image:string,
-    rating:number
+    rating:number,
+    submaps:ISubMap[]
 }
+
+let subMapSchema = new mongoose.Schema({
+    name: {
+        type:String,
+        required:true
+    },
+    description: { 
+        type:String,
+        required:true
+    }
+})
+
 
 let mapSchema = new mongoose.Schema({
     name: {
@@ -33,7 +52,8 @@ let mapSchema = new mongoose.Schema({
         min:0,
         max:10,
         default:0
-    }
+    },
+    submaps: [subMapSchema]
 
 });
 

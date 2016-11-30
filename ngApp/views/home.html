@@ -1,4 +1,32 @@
-
-
-
-<h1>Placeholder</h1>
+<h1>LET'S SEE IF ANYTHING WORKS!</h1>
+<form ng-submit="controller.mapAdd()">
+    <label>Name</label>
+    <input type="text" ng-model="controller.newMap.name">
+    <hr/>
+    <label>category</label>
+    <input type="text" ng-model="controller.newMap.category">
+    <hr/>
+    <label>picture</label>
+    <input type="text" ng-model="controller.newMap.image">
+    <button type="submit">Search/Add</button>
+</form>
+<ul class="map-list">
+    <li ng-repeat="map in controller.maps">
+        {{map.name}}: {{map.category}}
+        <hr/>
+        <img ng-src="{{map.image}}" style="max-width:200px" /> {{map.description}}
+        <a href="/edit/{{map._id}}">Edit</a>
+        <a href="#" ng-click="controller.removeMap(map._id)">Delete</a>
+        <form>
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="1" type="radio" name="ratings" value="1">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="2" type="radio" name="ratings" value="2">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="3" type="radio" name="ratings" value="3">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="4" type="radio" name="ratings" value="4">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="6" type="radio" name="ratings" value="6">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="7" type="radio" name="ratings" value="7">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="8" type="radio" name="ratings" value="8">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="9" type="radio" name="ratings" value="9">
+            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="10" type="radio" name="ratings" value="10">
+        </form>
+    </li>
+</ul>
