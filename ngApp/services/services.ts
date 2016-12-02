@@ -2,20 +2,23 @@ namespace d_dapp.Services {
 
       export class MapService {
       private MapResource;
+     public editMaps(map) {
+            return this.MapResource.save({_id:map.id}, map).$promise;
+        }
 
-      public get(id) {
-        return this.MapResource.get({id:id});
+      public getMaps(id) {
+        return this.MapResource.get({id:id}).$promise;
       }
 
-      public list() {
-        return this.MapResource.query();
+      public listMaps() {
+        return this.MapResource.query().$promise;
       }
 
-      public save(map) {
+      public saveMaps(map) {
         return this.MapResource.save({id:map._id}, map).$promise;
       }
 
-      public remove(mapId) {
+      public removeMaps(mapId) {
         return this.MapResource.remove({id:mapId}).$promise;
       }
 
@@ -40,8 +43,11 @@ namespace d_dapp.Services {
       public getUser(id) {
         return this.UserResource.get(id).$promise;
       }
+      public getCurrentUser() {
+        return this.$resource('api/currentuser').get().$promise;
+      }
       //ask about this /api/login/local stuff
-      constructor($resource: ng.resource.IResourceService) {
+      constructor(private $resource: ng.resource.IResourceService) {
         this.LoginResource = $resource('/api/Login/Local');
         this.RegisterResource = $resource('/api/Register');
         this.UserResource = $resource('/api/users/:id');

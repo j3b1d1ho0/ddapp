@@ -2,48 +2,76 @@ import * as express from 'express';
 import * as path from 'path';
 import * as favicon from 'serve-favicon';
 import * as logger from 'morgan';
-import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as ejs from 'ejs';
 import * as mongoose from 'mongoose';
-
-//WTF?! v
+import * as acl from 'acl';
+import * as session from 'express-session';
+import * as colors from 'colors';
+import Permission from './config/permission';
+import routes from './routes/index';
 import * as passport from 'passport';
 require("./config/passport")
 import Map from './models/ddapp'
 import maps from './api/maps';
 // import users from './api/users';
+let env = require("dotenv");
+let app = express();
 
+const MongoStore = require('connect-mongo')(session);
+if (app.get('env')) env.load();
+let dbc = mongoose.connect(process.env.MONGO_URI);
 
+let sess  = {
+  maxAge: 172800000,
+  secure: false,
+  httpOnly: true
+}
+colors.setTheme({
 
-const MONGO_URI = "mongodb://webuser:secret@ds111748.mlab.com:11748/ddapp";
-mongoose.connect(MONGO_URI).then(() => {
-  console.log('mongoose connected');
-}).catch((err) => {
-  console.log(err);
-
+  warn:"red"
 });
 
-import routes from './routes/index';
+if(app.get('env') === 'production') {
+  sess.secure = true
+}
 
 
 
-
-
-
-
-let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(session({
+  cookie: sess,
+  secret: process.env.SESSION_SECRET,
+  store: new MongoStore({
+    url: process.env.MONGO_URI
+  }),
+  unset: 'destroy',
+  resave: false,
+  saveUninitialized: false
+}));
+
+
+mongoose.connection.on('connected', () => {
+  Permission.setPermission(dbc);
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log('mongoose error');
+  console.log(err);
+});
+
+app.set('trust proxy', 1);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+
 app.use('/api/maps', maps);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));

@@ -1,0 +1,49 @@
+<h1>Welcome to the Edit Page!</h1>
+<div layout="row">
+    <div flex="66">
+        <form ng-submit="controller.save()" name="mapEdit">
+            <md-input-container>
+                <label>Name</label>
+                <input type="text" ng-model="controller.map.name">
+            </md-input-container>
+            <md-input-container>
+                <label>Category</label>
+                <input type="text" ng-model="controller.map.category">
+            </md-input-container>
+            <md-input-container>
+                <label>Description</label>
+                <textarea ng-model="controller.map.description"></textarea>
+            </md-input-container>
+            <md-input-container>
+                <label>Image</label>
+                <input type="text" ng-model="controller.map.image">
+            </md-input-container>
+            <md-toolbar class="md-primary">
+                <div md-toolbar-tools>
+                    <md-button type="submit" class="md-raised md-accent">Apply Changes</md-button>
+                    <md-button ng-click="controller.mapEdit.$setPristine()">Clear</md-button>
+                    <md-button ui-sref="Home" class="md-raised md-warn">Cancel</md-button>
+                </div>
+            </md-toolbar>
+        </form>
+    </div>
+    <div flex="33">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <p class="md-headline">
+                        {{controller.map.name}}:{{controller.map.category}}
+                    </p>
+                    <p class="md-subhead">
+                        {{controller.map.description}}
+                    </p>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <div class="md-media-lg card-media">
+                        <img ng-src="{{controller.map.image}}" />
+                    </div>
+                </md-card-title-media>
+            </md-card-title>
+        </md-card>
+    </div>
+</div>

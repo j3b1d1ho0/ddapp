@@ -1,12 +1,55 @@
 namespace d_dapp.Controllers {
 
+  export class NavController {
+    public currentUser;
+    constructor(
+      currentUser: ng.ui.IResolvedState,
+      userService: d_dapp.Services.UserService
+    ) {
+      this.currentUser = currentUser
+    }
+  }
+
   export class HomeController {
         public maps;
         public map = {};
+        public newMap;
 
+
+
+        public sendRating(map) {
+            this.mapService.editMaps(map).then(() => {
+                this.currentMaps();
+            });
+        }
+        public mapAdd() {
+            this.mapService.saveMaps(this.newMap).then((maps) => {
+                console.log(maps)
+                this.currentMaps();
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+        public removeMap(mapId) {
+          this.mapService.removeMaps(mapId).then(() => {
+              this.currentMaps();
+          }).catch((err) => {
+            console.log(err);
+          });
+        }
+
+        public currentMaps() {
+             this.mapService.listMaps().then((maps) => {
+                this.maps = maps;
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+        
         public save() {
-          this.mapService.save(this.map).then(()=> {
-            this.maps = this.mapService.list(); 
+          this.mapService.saveMaps(this.map).then(()=> {
+            this.maps = this.mapService.listMaps(); 
             this.map = {};     
             }).catch((err) => {
             console.error(err);
@@ -14,27 +57,39 @@ namespace d_dapp.Controllers {
         }
 
         public remove(mapId) {
-          this.mapService.remove(mapId).then(() => {
-            this.maps = this.mapService.list(); 
+          this.mapService.removeMaps(mapId).then(() => {
+            this.maps = this.mapService.listMaps(); 
           }).catch((err) => {
             console.error(err);
           });
         }
 
-        constructor(private mapService:d_dapp.Services.MapService) {
-          this.maps = this.mapService.list();
+        constructor(
+        private mapService:d_dapp.Services.MapService,
+        private $state: ng.ui.IStateService,
+        private $resource:ng.resource.IResourceService) 
+          {this.mapService.listMaps().then((results) => {
+            this.maps = results;
+            console.log("grr")
+          }).catch((err) => {
+            console.log("again?")
+          });
+          console.log(this.maps)
         }
     }
 
     export class EditController {
         public map;
-
+        public mapEdit;
         public save() {
-          this.mapService.save(this.map).then(()=> {
-            this.$state.go('home'); 
+          this.mapService.saveMaps(this.map).then(()=> {
+            this.$state.go('nav.Home'); 
           }).catch((err) => {
             console.error(err);
           })
+        }
+        public editClear(form:ng.IFormController) {
+          form.$setPristine()
         }
 
         constructor(
@@ -43,7 +98,13 @@ namespace d_dapp.Controllers {
           private $stateParams: ng.ui.IStateParamsService
         ) {
           let mapId = $stateParams['id'];
-          this.map = this.mapService.get(mapId);
+          console.log($stateParams)
+          //MAKE SURE GETMAPS RETURNS AN OBJECT!
+          this.mapService.getMaps(mapId).then((results) => {
+            this.map = results;
+          }).catch((err) => {
+            console.log(err)
+          }) ;
         }
     }
 
@@ -54,9 +115,7 @@ namespace d_dapp.Controllers {
     export class ForumController {
 
     }
-    export class ArticlesController {
 
-    }
     export class AccountController {
 
     }
@@ -72,17 +131,10 @@ namespace d_dapp.Controllers {
       public currentUser;
       public UserService;
       public CookieService;
-      public login(user) {
-        this.userService.login(user).then((res) => {
+     public login(user) {
+        this.UserService.login(user).then((res) => {
           this.CookieService.put('token', res.token);
-          this.UserService.getUser(res._id).then((user) => {
-            this.$rootScope['currentUser'] = user.user;
-            console.log('-- Current User in $rootScope --');
-            console.log(this.$rootScope['currentUser']);
-            this.$state.go('home');
-          }).catch((err) => {
-            this.logout();
-          });
+          this.$state.transitionTo('nav.Home', null, {reload: true, notify:true});
         }).catch((err) => {
           alert('Bunk login, please try again.');
         });
@@ -90,7 +142,7 @@ namespace d_dapp.Controllers {
 
       public register(user) {
         this.userService.register(user).then((res) => {
-          this.$state.go('Login');
+          this.$state.go('nav.Login');
         }).catch((err) => {
           alert('Registration error: please try again.');
         });
@@ -100,7 +152,7 @@ namespace d_dapp.Controllers {
         //destroy the cookie
         this.$rootScope['currentUser'] = null;
         this.CookieService.remove('token');
-        this.$state.go('Home');
+        this.$state.go('nav.Home');
       }
       
       constructor(

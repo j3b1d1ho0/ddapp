@@ -8,53 +8,67 @@ namespace d_dapp {
         $mdIconProvider: ng.material.IIconProvider
         
     ) => {
-        // Define routes
-        $stateProvider.state('Modules', {
+        $stateProvider
+        .state('nav', {
+            url: '',
+            abstract: true,
+            templateUrl: '/ngApp/views/nav.html',
+            controller: d_dapp.Controllers.NavController,
+            controllerAs: 'vm',
+            resolve: {
+                currentUser: ['userService', function(userService) {
+                    return userService.getCurrentUser();
+                }]
+            }
+        })
+        .state('nav.Modules', {
              url: "/Modules",
              templateUrl: '/ngApp/views/modules.html',
              controller: d_dapp.Controllers.ModulesController,
              controllerAs: 'controller'
-         }).state("Gear", {
+         }).state("nav.Gear", {
              url: "/gear",
+             parent: "nav",
              templateUrl:'/ngApp/views/gear.html',
              controller: d_dapp.Controllers.GearController,
              controllerAs: 'controller'
-         }).state("Edit", {
-             url: "/edit",
+         }).state("nav.Edit", {
+             url: "/edit/:id",
+             parent: "nav",
              templateUrl:'/ngApp/views/edit.html',
              controller: d_dapp.Controllers.EditController,
              controllerAs: 'controller'
-         }).state("Login", {
+         }).state("nav.Login", {
              url: "/login",
+             parent: "nav",
              templateUrl:'/ngApp/views/login.html',
              controller: d_dapp.Controllers.LoginController,
              controllerAs: 'controller'
-         }).state("Register", {
+         }).state("nav.Register", {
              url: "/register",
+             parent: "nav",
              templateUrl:'/ngApp/views/register.html',
              controller: d_dapp.Controllers.LoginController,
              controllerAs: 'controller'
-         }).state("Account", {
+         }).state("nav.Account", {
              url: "/account",
+             parent: "nav",
              templateUrl:'/ngApp/views/account.html',
              controller: d_dapp.Controllers.AccountController,
              controllerAs: 'controller'
-        }).state("Forum", {
+        }).state("nav.Forum", {
              url: "/forum",
+             parent: "nav",
              templateUrl:'/ngApp/views/forum.html',
              controller: d_dapp.Controllers.ForumController,
              controllerAs: 'controller'
-        }).state("Home", {
+        }).state("nav.Home", {
              url: "/",
+             parent: "nav",
              templateUrl:'/ngApp/views/home.html',
              controller: d_dapp.Controllers.HomeController,
              controllerAs: 'controller'
-        }).state("Articles", {
-             url: "/articles",
-             templateUrl:'/ngApp/views/articles.html',
-             controller: d_dapp.Controllers.ArticlesController,
-             controllerAs: 'controller'
-            });
+        });
             $urlRouterProvider.otherwise('/');
 
             $mdThemingProvider.theme('default')

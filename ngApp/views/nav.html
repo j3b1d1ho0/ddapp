@@ -1,0 +1,11 @@
+<div style: "border: purple 15px solid; padding: 5px">
+    <h1>Working Title</h1>
+    <div ng-if="vm.currentUser.user">
+    </div>
+    <pre>{{vm.currentUser | json:4}}</pre>
+    <h2>Welcome {{vm.currentUser.user.username}}!</h2>
+
+
+
+</div>
+<ui-view></ui-view>

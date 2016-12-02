@@ -1,5 +1,6 @@
 import * as express from 'express';
-import Map from '../models/ddapp'
+import * as mongoose from 'mongoose';
+import Map from '../models/ddapp';
 
 let router = express.Router();
  
@@ -11,21 +12,26 @@ let maps = [{
   rating: 0
 }]
 
+// Map.find({}).remove(() => {
+//     maps.map((map, key) => {
+//         Map.create(map);
+//     });
+// });
 
-Map.find().count().then((results) => {
-  console.log(results);
-    if (results < 1) {
-        Map.create(maps).then((success) => {
-            console.log(success);
-        }).catch((err) => {
-            console.log(err, "error");
-        })
-    }
-}).catch((err) => {
-    console.log(err, "error")
-})
+// Map.find().count().then((results) => {
+//   console.log(results);
+//     if (results < 1) {
+//         Map.create(maps).then((success) => {
+//             console.log(success);
+//         }).catch((err) => {
+//             console.log(err, "error");
+//         })
+//     }
+// }).catch((err) => {
+//     console.log(err, "error")
+// })
 
-// get all maps
+// // get all maps
 router.get('/', (req, res) => {
   Map.find().then((maps)=> {
       res.json(maps);
@@ -69,7 +75,8 @@ router.post('/:id', (req, res) => {
     map.description = req.body.description;
     map.image = req.body.image;
     map.rating = req.body.rating;
-    // save updated map
+
+
     map.save().then((updatedMap) => {
       res.json(updatedMap);
     }).catch((err) => {
