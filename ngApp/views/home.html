@@ -1,28 +1,23 @@
-<h1>Welcome to the map section!</h1>
-<form ng-submit="controller.mapAdd()">
-    <label>Name</label>
-    <input type="text" ng-model="controller.newMap.name">
-    <hr/>
-    <label>Category</label>
-    <input type="text" ng-model="controller.newMap.category">
-    <hr/>
-    <label>Description</label>
-    <textarea ng-model="controller.newMap.description"></textarea>
-    <hr/>
-    <label>Image</label>
-    <input type="text" ng-model="controller.newMap.image">
-    <button type="submit">Search/Add</button>
-</form>
-<div layout="row" flex>
-    <md-card layout="column" layout-align="" flex="33" ng-repeat="map in controller.maps">
+<h1><u>Recent Modules</u></h1>
+
+<div layout="row max-height:280px" layout-wrap flex>
+    <md-card md-theme="default" layout="column" layout-align="" flex="25" ng-repeat="map in controller.maps">
         <md-card-content>
-            <md-card-header>
-                <h2>{{map.name}}: {{map.category}}</h2>
+            <md-card-header md-colors="::{backgroundColor: 'default-primary-700'}">
+                <md-card-header-text>
+                    <span class="md-headline">{{map.name}}: </span>
+                    <span class="md-subhead"><em><strong>  {{map.category}}</strong></em></span>
+                </md-card-header-text>
             </md-card-header>
-            <img ng-src="{{map.image}}" style="max-height:280px" class="md-card-image" />
-            <md-card-footer>{{map.description}}</md-card-footer>
-            <a href="/edit/{{map._id}}">Edit</a>
-            <a href="#" ng-click="controller.removeMap(map._id)">Delete</a>
+            </br>
+            <img ng-src="{{map.image}}" style="max-height:280px" class="md-card-image" flex="100" />
+            </br>
+            <md-card-footer><em>{{map.description}}</em></md-card-footer>
+            </br>
+            <md-card-actions layout="row" layout-align="end end">
+                <md-button><a href="/edit/{{map._id}}">Edit</a></md-button>
+                <md-button><a href="#" ng-click="controller.removeMap(map._id)">Delete</a></md-button>
+            </md-card-actions>
             <!--<form>
                 <!--<input ng-change="controller.sendRating(map)" ng-model="map.rating" label="1" type="radio" name="ratings" value="1">
             <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="2" type="radio" name="ratings" value="2">

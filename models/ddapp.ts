@@ -9,7 +9,7 @@ export interface ISubMap {
 
 export interface IMap extends mongoose.Document {
     name:string,
-    category:string,
+    category:"Dungeon" | "NPC" | "World",
     description:string,
     image:string,
     rating:number,
@@ -20,6 +20,9 @@ let subMapSchema = new mongoose.Schema({
     name: {
         type:String,
         required:true
+    },
+    category: {
+        enum: ["Dungeon", "NPC", "World"]
     },
     description: { 
         type:String,
@@ -44,7 +47,7 @@ let mapSchema = new mongoose.Schema({
     image: {
         type:String,
         required:false,
-        default:"https://i.ytimg.com/vi/mRf3-JkwqfU/hqdefault.jpg" 
+        default:"http://kingofwallpapers.com/dwarf/dwarf-012.jpg" 
     },
     rating: {
         type:Number,

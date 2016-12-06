@@ -1,13 +1,17 @@
-<button ng-click="controller.logout()">Logout</button>
+<md-button ng-click="controller.logout()">Logout</md-button>
 
 
-<h1>Login</h1>
+<span>Login</span>
 
 
 <form ng-submit="controller.login(controller.user)">
-    <label>User Name</label>
-    <input type="text" ng-model="controller.user.username">
-    <label>Password</label>
-    <input type="password" ng-model="controller.user.password">
-    <button type="submit">Submit</button>
+    <md-input-container>
+        <label>User Name</label>
+        <input type="text" ng-model="controller.user.username">
+    </md-input-container>
+    <md-input-container>
+        <label>Password</label>
+        <input type="password" ng-model="controller.user.password">
+    </md-input-container>
+    <md-button type="submit">Submit</md-button>
 </form>

@@ -2,19 +2,63 @@ namespace d_dapp.Controllers {
 
   export class NavController {
     public currentUser;
+    public maps;
+    public map = {};
+    public newMap;
+    public categories = ["Dungeon", "NPC", "World"];
+    public openLeftMenu() {
+      this.$mdSidenav('left').toggle();
+    }
+    public currentMaps() {
+      this.mapService.listMaps().then((maps) => {
+        this.maps = maps;
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    public mapAdd() {
+      this.mapService.saveMaps(this.newMap).then((maps) => {
+        console.log(maps)
+        this.$state.go('nav.Home', null, {reload: true});
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    public save() {
+          this.mapService.saveMaps(this.map).then(()=> {
+            this.maps = this.mapService.listMaps(); 
+            this.map = {};     
+            }).catch((err) => {
+            console.error(err);
+          })
+        }
+
     constructor(
       currentUser: ng.ui.IResolvedState,
-      userService: d_dapp.Services.UserService
+      userService: d_dapp.Services.UserService,
+      private mapService:d_dapp.Services.MapService,
+      private $state: ng.ui.IStateService,
+      $mdMedia: ng.material.IMedia,
+      private $mdSidenav: ng.material.ISidenavService,
+
     ) {
       this.currentUser = currentUser
-    }
+    this.mapService.listMaps().then((results) => {
+            this.maps = results;
+            console.log("grr")
+          }).catch((err) => {
+            console.log("again?")
+          });
+          console.log(this.maps)
+        }
   }
 
   export class HomeController {
         public maps;
         public map = {};
         public newMap;
-
+        public categories = ["Dungeon", "NPC", "World"];
+// TODO: clean up the HomeController
 
 
         public sendRating(map) {
@@ -81,6 +125,7 @@ namespace d_dapp.Controllers {
     export class EditController {
         public map;
         public mapEdit;
+        public categories = ["Dungeon", "NPC", "World"];
         public save() {
           this.mapService.saveMaps(this.map).then(()=> {
             this.$state.go('nav.Home'); 
@@ -99,7 +144,6 @@ namespace d_dapp.Controllers {
         ) {
           let mapId = $stateParams['id'];
           console.log($stateParams)
-          //MAKE SURE GETMAPS RETURNS AN OBJECT!
           this.mapService.getMaps(mapId).then((results) => {
             this.map = results;
           }).catch((err) => {

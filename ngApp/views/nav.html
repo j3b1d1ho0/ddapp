@@ -1,11 +1,56 @@
-<div style: "border: purple 15px solid; padding: 5px">
-    <h1>Working Title</h1>
-    <div ng-if="vm.currentUser.user">
-    </div>
-    <pre>{{vm.currentUser | json:4}}</pre>
-    <h2>Welcome {{vm.currentUser.user.username}}!</h2>
+<div layout="column" layout-fill>
+    <md-toolbar class="md-medium-tall">
+        <div class="md-toolbar-tools" ng-if="vm.currentUser.user">
+        </div>
+        <span>Welcome to WORKING TITLE {{vm.currentUser.user.username}}!
+        <md-button md-primary href="/">Home</md-button>
+        <md-button md-primary href="/login">Login</md-button>
+        <md-button md-primary href="/register">Register</md-button>
+
+        <md-button ng-click="vm.openLeftMenu()">
+            Add Object
+        </md-button>
+        </span>
+    </md-toolbar>
 
 
 
+    <md-sidenav md-component-id="left" class="md-sidenav-left md-primary">
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Input</h1>
+        </md-toolbar>
+        <form ng-submit="vm.mapAdd()">
+            <p>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="vm.newMap.name">
+                </md-input-container>
+            </p>
+            <p>
+                <md-input-container>
+                    <label>Description</label>
+                    <textarea ng-model="vm.newMap.description"></textarea>
+                </md-input-container>
+            </p>
+            <p>
+                <md-input-container>
+                    <md-select ng-model="vm.newMap.category">
+                        <label>Category</label>
+                        <md-option ng-value="category" ng-repeat="category in vm.categories">{{category}}</md-option>
+                    </md-select>
+                </md-input-container>
+
+            </p>
+            <p>
+                <md-input-container>
+                    <label>Image</label>
+                    <input type="text" ng-model="vm.newMap.image">
+                </md-input-container>
+            </p>
+            <md-button type="submit">Add</md-button>
+        </form>
+    </md-sidenav>
+    <md-content>
+        <ui-view></ui-view>
+    </md-content>
 </div>
-<ui-view></ui-view>
