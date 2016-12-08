@@ -19,7 +19,7 @@ let env = require("dotenv");
 let app = express();
 
 const MongoStore = require('connect-mongo')(session);
-if (app.get('env')) env.load();
+if (app.get('env') === 'development') env.load();
 let dbc = mongoose.connect(process.env.MONGO_URI);
 
 let sess  = {

@@ -16,19 +16,9 @@
             </br>
             <md-card-actions layout="row" layout-align="end end">
                 <md-button><a href="/edit/{{map._id}}">Edit</a></md-button>
-                <md-button><a href="#" ng-click="controller.removeMap(map._id)">Delete</a></md-button>
+                
+                <md-button ng-show="vm.currentUser.userType === 'admin'"><a href="#" ng-click="controller.removeMap(map._id)">Delete</a></md-button>
             </md-card-actions>
-            <!--<form>
-                <!--<input ng-change="controller.sendRating(map)" ng-model="map.rating" label="1" type="radio" name="ratings" value="1">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="2" type="radio" name="ratings" value="2">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="3" type="radio" name="ratings" value="3">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="4" type="radio" name="ratings" value="4">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="6" type="radio" name="ratings" value="6">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="7" type="radio" name="ratings" value="7">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="8" type="radio" name="ratings" value="8">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="9" type="radio" name="ratings" value="9">
-            <input ng-change="controller.sendRating(map)" ng-model="map.rating" label="10" type="radio" name="ratings" value="10">-->
-            <!--</form>-->
         </md-card-content>
     </md-card>
 </div>

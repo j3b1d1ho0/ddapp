@@ -7,6 +7,7 @@ import * as jwt from 'jsonwebtoken';
 export interface IUser extends mongoose.Document {
   username: { type: String, lowercase: true, unique: true},
   email: { type: String, unique: true, lowercase: true },
+  userType: String,
   passwordHash: String,
   salt: String,
   id: String,
@@ -18,6 +19,13 @@ export interface IUser extends mongoose.Document {
 let UserSchema = new mongoose.Schema({
   username: { type: String, lowercase: true, unique: true},
   email: { type: String, unique: true, lowercase: true },
+  userType: 
+  
+  {
+    type: String,
+  default:"standard",
+  },
+  
   passwordHash: String,
   salt: String,
   id: { type: String, getter: function(val) { return this._id.toString(); }, unique: true }

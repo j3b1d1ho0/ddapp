@@ -19,6 +19,8 @@ namespace d_dapp {
                 currentUser: ['userService', function(userService) {
                     return userService.getCurrentUser();
                 }]
+            },
+            data: {
             }
         })
         .state('nav.Modules', {

@@ -4,6 +4,8 @@
     "description": "",
     "main": "./bin/www",
     "scripts": {
+        "preinstall": "npm i -g bower",
+        "postinstall": "bower i",
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./bin/www"
     },

@@ -37,9 +37,13 @@ router.get('/currentuser', methods.isAuthenticated, function(req, res, next) {
 router.post('/Register', (req, res, next) => {
   let user = new User();
   console.log(req.body, "cheers")
-  user.username = req.body.username;
-  user.email = req.body.email;
-  user.setPassword(req.body.password);
+  user.username = req.body.user.username;
+  user.email = req.body.user.email;
+  user.setPassword(req.body.user.password);
+  if (req.body.key === process.env.ADMIN_KEY) {
+    user.userType = "admin"
+  } 
+
   user.save(function(err, user) {
       console.log(err)
     if(err) return next(err);

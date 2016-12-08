@@ -172,6 +172,7 @@ namespace d_dapp.Controllers {
     // }
     export class LoginController {
       public user;
+      public adminPriv;
       public currentUser;
       public UserService;
       public CookieService;
@@ -185,7 +186,7 @@ namespace d_dapp.Controllers {
       }
 
       public register(user) {
-        this.userService.register(user).then((res) => {
+        this.userService.register({user:this.user, key: this.adminPriv}).then((res) => {
           this.$state.go('nav.Login');
         }).catch((err) => {
           alert('Registration error: please try again.');
