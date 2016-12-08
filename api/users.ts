@@ -6,7 +6,7 @@ import * as acl from 'acl';
 import methods from './methods';
 import User from '../models/users';
 import * as session from 'express-session';
-import Permission from '../config/Permission';
+import permission from '../config/permission';
 
 let router = express.Router();
 
