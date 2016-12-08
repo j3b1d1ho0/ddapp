@@ -1,5 +1,5 @@
-namespace d_dapp {
-
+   namespace d_dapp {
+   
     angular.module('d_dapp', ['ui.router', 'ngResource', 'ngMaterial', 'ngMessages', 'ngCookies']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
@@ -8,7 +8,7 @@ namespace d_dapp {
         $mdIconProvider: ng.material.IIconProvider
         
     ) => {
-        $stateProvider
+        $stateProvider        
         .state('nav', {
             url: '',
             abstract: true,
