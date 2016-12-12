@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import Map from '../models/ddapp';
+import methods from './methods'
 
 let router = express.Router();
  
@@ -49,13 +50,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Create new map
-router.post('/', (req, res) => {
+router.post('/', methods.isAuthenticated, (req, res) => {
   let map = new Map();
   map.name = req.body.name;
   map.category = req.body.category;
   map.description = req.body.description;
   map.image = req.body.image;
-  map.rating = req.body.rating; 
+  map.tags = req.body.tags; 
+
 
   // save new map
   map.save().then((newMap) => {
@@ -74,7 +76,7 @@ router.post('/:id', (req, res) => {
     map.category = req.body.category;
     map.description = req.body.description;
     map.image = req.body.image;
-    map.rating = req.body.rating;
+    map.tags = req.body.tags;
 
 
     map.save().then((updatedMap) => {

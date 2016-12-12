@@ -16,7 +16,7 @@
             controller: d_dapp.Controllers.NavController,
             controllerAs: 'vm',
             resolve: {
-                currentUser: ['userService', function(userService) {
+                currentUser: ['userService', (userService) => {
                     return userService.getCurrentUser();
                 }]
             },

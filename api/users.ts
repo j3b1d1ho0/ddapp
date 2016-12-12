@@ -56,7 +56,6 @@ router.post('/Login/Local', function(req, res, next) {
     console.log('--= Passport Auth =--');
     if(err) return next(err);
     if(user) {
-      //TODO = I'm not being assigned a cookie for res.cookie...
       let token = user.generateJWT();
       req.session.regenerate((err) => {
         console.log(err)

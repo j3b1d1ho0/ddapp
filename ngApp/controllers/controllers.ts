@@ -5,7 +5,14 @@ namespace d_dapp.Controllers {
     public maps;
     public map = {};
     public newMap;
+    public tags = [];
     public categories = ["Dungeon", "NPC", "World"];
+    public newChip(chip) {
+      return {
+        name: chip,
+        };
+    };
+    
     public openLeftMenu() {
       this.$mdSidenav('left').toggle();
     }
@@ -17,6 +24,7 @@ namespace d_dapp.Controllers {
       })
     }
     public mapAdd() {
+      this.newMap.tags = this.tags;
       this.mapService.saveMaps(this.newMap).then((maps) => {
         console.log(maps)
         this.$state.go('nav.Home', null, {reload: true});
@@ -25,6 +33,7 @@ namespace d_dapp.Controllers {
       })
     }
     public save() {
+      this.newMap.tags = this.tags;
           this.mapService.saveMaps(this.map).then(()=> {
             this.maps = this.mapService.listMaps(); 
             this.map = {};     
@@ -43,6 +52,7 @@ namespace d_dapp.Controllers {
 
     ) {
       this.currentUser = currentUser
+
     this.mapService.listMaps().then((results) => {
             this.maps = results;
             console.log("grr")
@@ -61,19 +71,6 @@ namespace d_dapp.Controllers {
 // TODO: clean up the HomeController
 
 
-        public sendRating(map) {
-            this.mapService.editMaps(map).then(() => {
-                this.currentMaps();
-            });
-        }
-        public mapAdd() {
-            this.mapService.saveMaps(this.newMap).then((maps) => {
-                console.log(maps)
-                this.currentMaps();
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
 
         public removeMap(mapId) {
           this.mapService.removeMaps(mapId).then(() => {
@@ -109,9 +106,11 @@ namespace d_dapp.Controllers {
         }
 
         constructor(
+        private currentUser: ng.ui.IResolvedState,
         private mapService:d_dapp.Services.MapService,
         private $state: ng.ui.IStateService,
-        private $resource:ng.resource.IResourceService) 
+        private $resource:ng.resource.IResourceService
+        ) 
           {this.mapService.listMaps().then((results) => {
             this.maps = results;
             console.log("grr")
@@ -120,6 +119,7 @@ namespace d_dapp.Controllers {
           });
           console.log(this.maps)
         }
+
     }
 
     export class EditController {

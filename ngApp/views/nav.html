@@ -47,6 +47,15 @@
                     <input type="text" ng-model="vm.newMap.image">
                 </md-input-container>
             </p>
+            <p>
+                <md-input-container>
+                    <md-chips md-transform-chip="vm.newChip($chip)" ng-model="vm.tags" placeholder="Add a tag" md-max-chips="5">
+                        <md-chip-template>
+                            {{$chip.name}}
+                        </md-chip-template>
+                    </md-chips>
+                </md-input-container>
+            </p>
             <md-button type="submit">Add</md-button>
         </form>
     </md-sidenav>

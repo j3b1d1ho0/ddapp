@@ -1,9 +1,8 @@
 
 import * as mongoose from 'mongoose';
 
-export interface ISubMap {
-    name:string,
-    description:string
+export interface ITag {
+    name:string
 }
 
 
@@ -13,21 +12,11 @@ export interface IMap extends mongoose.Document {
     description:string,
     image:string,
     rating:number,
-    submaps:ISubMap[]
+    tags:ITag[]
 }
 
-let subMapSchema = new mongoose.Schema({
-    name: {
-        type:String,
-        required:true
-    },
-    category: {
-        enum: ["Dungeon", "NPC", "World"]
-    },
-    description: { 
-        type:String,
-        required:true
-    }
+let TagSchema = new mongoose.Schema({
+    name:{type:String}
 })
 
 
@@ -56,7 +45,7 @@ let mapSchema = new mongoose.Schema({
         max:10,
         default:0
     },
-    submaps: [subMapSchema]
+    tags: [TagSchema]
 
 });
 
