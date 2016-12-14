@@ -17,10 +17,11 @@
         </md-card-content>
         <md-card-footer>
             <md-content>
+                <span class="md-primary">Tags:</span>
                 <span ng-repeat="tag in map.tags">{{tag.name}}, </span>
                 <md-card-actions layout="row" layout-align="end end">
-                    <md-button><a href="/edit/{{map._id}}">Edit</a></md-button>
-                    <md-button ng-if="vm.currentUser.user.userType === 'admin'"><a href="#" ng-click="controller.removeMap(map._id)">Delete</a></md-button>
+                    <md-button ng-if="vm.currentUser.user.userType"><a href="/edit/{{map._id}} ">Edit</a></md-button>
+                    <md-button ng-if="vm.currentUser.user.userType ==='admin' "><a href="# " ng-click="controller.removeMap(map._id) ">Delete</a></md-button>
                 </md-card-actions>
             </md-content>
         </md-card-footer>

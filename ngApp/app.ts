@@ -23,18 +23,7 @@
             data: {
             }
         })
-        .state('nav.Modules', {
-             url: "/Modules",
-             templateUrl: '/ngApp/views/modules.html',
-             controller: d_dapp.Controllers.ModulesController,
-             controllerAs: 'controller'
-         }).state("nav.Gear", {
-             url: "/gear",
-             parent: "nav",
-             templateUrl:'/ngApp/views/gear.html',
-             controller: d_dapp.Controllers.GearController,
-             controllerAs: 'controller'
-         }).state("nav.Edit", {
+        .state("nav.Edit", {
              url: "/edit/:id",
              parent: "nav",
              templateUrl:'/ngApp/views/edit.html',
@@ -52,19 +41,7 @@
              templateUrl:'/ngApp/views/register.html',
              controller: d_dapp.Controllers.LoginController,
              controllerAs: 'controller'
-         }).state("nav.Account", {
-             url: "/account",
-             parent: "nav",
-             templateUrl:'/ngApp/views/account.html',
-             controller: d_dapp.Controllers.AccountController,
-             controllerAs: 'controller'
-        }).state("nav.Forum", {
-             url: "/forum",
-             parent: "nav",
-             templateUrl:'/ngApp/views/forum.html',
-             controller: d_dapp.Controllers.ForumController,
-             controllerAs: 'controller'
-        }).state("nav.Home", {
+         }).state("nav.Home", {
              url: "/",
              parent: "nav",
              templateUrl:'/ngApp/views/home.html',

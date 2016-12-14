@@ -125,23 +125,31 @@ namespace d_dapp.Controllers {
     export class EditController {
         public map;
         public mapEdit;
+        public newMap;
         public categories = ["Dungeon", "NPC", "World"];
+        public editTags = [];
+        public newChip(chip) {
+      return {
+        name: chip,
+        };
+    };
         public save() {
+          console.log(this.editTags, "heeeey")
+          this.map.tags = this.editTags;
           this.mapService.saveMaps(this.map).then(()=> {
             this.$state.go('nav.Home'); 
           }).catch((err) => {
             console.error(err);
           })
         }
-        public editClear(form:ng.IFormController) {
-          form.$setPristine()
-        }
+       
 
         constructor(
           private mapService:d_dapp.Services.MapService,
           private $state: ng.ui.IStateService,
-          private $stateParams: ng.ui.IStateParamsService
-        ) {
+          private $stateParams: ng.ui.IStateParamsService,
+          $mdMedia: ng.material.IMedia,
+        ) {console.log(this.editTags,"heeeey")
           let mapId = $stateParams['id'];
           console.log($stateParams)
           this.mapService.getMaps(mapId).then((results) => {
@@ -153,23 +161,6 @@ namespace d_dapp.Controllers {
     }
 
 
-    export class ModulesController {
-
-    }
-    export class ForumController {
-
-    }
-
-    export class AccountController {
-
-    }
-    export class GearController {
-
-    }
-    // export class RegisterController {
-      
-
-    // }
     export class LoginController {
       public user;
       public adminPriv;
